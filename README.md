@@ -96,12 +96,12 @@ Then came the dockerfile, testing, trouble shooting. While I've not coverd every
 -Open POSTMAN
 
 On Postman, once logged in:
- create a new request by clicking the + sign. 
- change the address to "http://0.0.0.0:5000/predict"
- on the left of the address, change the request type to "POST"
- click on the RAW selector
- click on the body section
- Paste:
+  * create a new request by clicking the + sign. 
+  * change the address to "http://0.0.0.0:5000/predict"
+  * on the left of the address, change the request type to "POST"
+  * click on the RAW selector
+  * click on the body section
+  * Paste:
 
 ```JSON
  [
@@ -136,8 +136,8 @@ On Postman, once logged in:
 ]
 
 ```
-- and click POST
-- You then recieve the following response:
+ * and click POST
+ * You then recieve the following response:
 
  ```JSON
 [
