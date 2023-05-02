@@ -4,12 +4,13 @@ import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-from api.preprocessing_featurepipeline import Preprocessor
-from joblib import load
+from _00_preprocessing_featurepipeline import Preprocessor
+import pickle 
 
 # Load the trained model
 
-model = load('./model/random_forest_weights.joblib')
+with open('random_forest_weights.pkl', 'rb') as file:
+    model = pickle.load(file)
 
 
 # Create a FastAPI app

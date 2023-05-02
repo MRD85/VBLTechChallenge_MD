@@ -1,10 +1,9 @@
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-from joblib import load
 import pandas as pd
 import pickle
-from api.preprocessing_featurepipeline.py import Preprocessor
+from _00_preprocessing_featurepipeline import Preprocessor
 
 class InputData(BaseModel):
     ID: int
@@ -19,16 +18,26 @@ class InputData(BaseModel):
     Late6089: int
     Deps: int
 
+# Load the model using pickle
+with open('random_forest_weights.pkl', 'rb') as file:
+    model = pickle.load(file)
 
-model = load('./model/random_forest_weights.joblib')
-
-
+# Get the expected feature names
+expected_features = model.feature_names_in_
 
 app = FastAPI()
 
 @app.post('/predict')
 async def predict(input_data: InputData):
     input_df = pd.DataFrame([input_data.dict()])
+    
+    # Check for missing features and add them to the input_df with appropriate imputed values
+    for feature in expected_features:
+        if feature not in input_df.columns:
+            # Impute missing values. Here we use mean imputation as an example:
+            imputed_value = 0  # Replace this with the appropriate imputed value
+            input_df[feature] = imputed_value
+
     preprocessor = Preprocessor(input_df)
     preprocessed_data = preprocessor.preprocess_data()
     probabilities = model.predict_proba(preprocessed_data)
