@@ -13,6 +13,7 @@ class Preprocessor:
         self._one_hot_encoding()
         self._remove_extra_features()
         self.addMissingColumns()
+        self.removeExtraColumns()
         return self.data
 
     def _rename_columns(self):
@@ -66,20 +67,37 @@ class Preprocessor:
 
 
 
-        def addMissingColumns(self):
-            """ adding columns which are not present in the test data """
-            modelFeatures = ['UnsecLines_0', 'UnsecLines_1', 'UnsecLines_2',
-                        'UnsecLines_3', 'UnsecLines_4', 'age_0', 'age_1', 'age_2', 'age_3',
-                        'age_4', 'Late3059_0', 'Late3059_1', 'Late3059_2', 'Late3059_3',
-                        'Late3059_4', 'Late3059_5', 'Late3059_6', 'DebtRatio_0', 'DebtRatio_1',
-                        'DebtRatio_2', 'DebtRatio_3', 'DebtRatio_4', 'MonthlyIncome_0',
-                        'MonthlyIncome_1', 'MonthlyIncome_2', 'MonthlyIncome_3',
-                        'MonthlyIncome_4', 'OpenCredit_0', 'OpenCredit_1', 'OpenCredit_2',
-                        'OpenCredit_3', 'OpenCredit_4', 'Late90_0', 'Late90_1', 'Late90_2',
-                        'Late90_3', 'Late90_4', 'Late90_5', 'PropLines_0', 'PropLines_1',
-                        'PropLines_2', 'PropLines_3', 'PropLines_4', 'PropLines_5',
-                        'PropLines_6', 'Late6089_0', 'Late6089_1', 'Late6089_2', 'Late6089_3',
-                        'Deps_0.0', 'Deps_1.0', 'Deps_2.0', 'Deps_3.0', 'Deps_4.0']
-            for feature in modelFeatures:
-                if feature not in self.data.columns:
-                    self.data[feature] = 0
+    def addMissingColumns(self):
+        """ adding columns which are not present in the test data """
+        modelFeatures = ['UnsecLines_0', 'UnsecLines_1', 'UnsecLines_2',
+                    'UnsecLines_3', 'UnsecLines_4', 'age_0', 'age_1', 'age_2', 'age_3',
+                    'age_4', 'Late3059_0', 'Late3059_1', 'Late3059_2', 'Late3059_3',
+                    'Late3059_4', 'Late3059_5', 'Late3059_6', 'DebtRatio_0', 'DebtRatio_1',
+                    'DebtRatio_2', 'DebtRatio_3', 'DebtRatio_4', 'MonthlyIncome_0',
+                    'MonthlyIncome_1', 'MonthlyIncome_2', 'MonthlyIncome_3',
+                    'MonthlyIncome_4', 'OpenCredit_0', 'OpenCredit_1', 'OpenCredit_2',
+                    'OpenCredit_3', 'OpenCredit_4', 'Late90_0', 'Late90_1', 'Late90_2',
+                    'Late90_3', 'Late90_4', 'Late90_5', 'PropLines_0', 'PropLines_1',
+                    'PropLines_2', 'PropLines_3', 'PropLines_4', 'PropLines_5',
+                    'PropLines_6', 'Late6089_0', 'Late6089_1', 'Late6089_2', 'Late6089_3',
+                    'Deps_0.0', 'Deps_1.0', 'Deps_2.0', 'Deps_3.0', 'Deps_4.0']
+        for feature in modelFeatures:
+            if feature not in self.data.columns:
+                self.data[feature] = 0
+
+    def removeExtraColumns(self):
+        """ removing columns which are not in the modelFeatures """
+        modelFeatures = ['UnsecLines_0', 'UnsecLines_1', 'UnsecLines_2',
+                    'UnsecLines_3', 'UnsecLines_4', 'age_0', 'age_1', 'age_2', 'age_3',
+                    'age_4', 'Late3059_0', 'Late3059_1', 'Late3059_2', 'Late3059_3',
+                    'Late3059_4', 'Late3059_5', 'Late3059_6', 'DebtRatio_0', 'DebtRatio_1',
+                    'DebtRatio_2', 'DebtRatio_3', 'DebtRatio_4', 'MonthlyIncome_0',
+                    'MonthlyIncome_1', 'MonthlyIncome_2', 'MonthlyIncome_3',
+                    'MonthlyIncome_4', 'OpenCredit_0', 'OpenCredit_1', 'OpenCredit_2',
+                    'OpenCredit_3', 'OpenCredit_4', 'Late90_0', 'Late90_1', 'Late90_2',
+                    'Late90_3', 'Late90_4', 'Late90_5', 'PropLines_0', 'PropLines_1',
+                    'PropLines_2', 'PropLines_3', 'PropLines_4', 'PropLines_5',
+                    'PropLines_6', 'Late6089_0', 'Late6089_1', 'Late6089_2', 'Late6089_3',
+                    'Deps_0.0', 'Deps_1.0', 'Deps_2.0', 'Deps_3.0', 'Deps_4.0']
+        extra_columns = [col for col in self.data.columns if col not in modelFeatures]
+        self.data.drop(extra_columns, axis=1, inplace=True)
