@@ -103,7 +103,7 @@ On Postman, once logged in:
  click on the body section
  Paste:
 
- '''python
+```JSON
  [
   {
     "ID": "1",
@@ -135,11 +135,11 @@ On Postman, once logged in:
   }
 ]
 
- '''
+```
 - and click POST
 - You then recieve the following response:
 
- '''JSON
+ ```JSON
 [
     {
         "Id": "1",
@@ -150,7 +150,7 @@ On Postman, once logged in:
         "Probability": 0.46194308755760377
     }
 ]
- '''
+```
 
  ## Ways to Improve
 
