@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
-import pickle
+from joblib import load
 from _00_preprocessing_featurepipeline import Preprocessor
 
 class InputData(BaseModel):
@@ -18,9 +18,7 @@ class InputData(BaseModel):
     Late6089: int
     Deps: int
 
-# Load the model using pickle
-with open('random_forest_weights.pkl', 'rb') as file:
-    model = pickle.load(file)
+model = load('random_forest_weights.joblib')
 
 # Get the expected feature names
 expected_features = model.feature_names_in_

@@ -1,3 +1,4 @@
 model.pkl filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
 Assesment[[:space:]]Files/model_weights.pkl filter=lfs diff=lfs merge=lfs -text
+api/random_forest_weights.joblib filter=lfs diff=lfs merge=lfs -text

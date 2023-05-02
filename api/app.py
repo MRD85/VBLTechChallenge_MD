@@ -5,13 +5,10 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 from _00_preprocessing_featurepipeline import Preprocessor
-import pickle 
+from joblib import load
 
 # Load the trained model
-
-with open('random_forest_weights.pkl', 'rb') as file:
-    model = pickle.load(file)
-
+model = load('random_forest_weights.joblib')
 
 # Create a FastAPI app
 app = FastAPI()
@@ -45,12 +42,11 @@ async def predict(input_data: InputData):
     preprocessor = Preprocessor(input_df)
     preprocessed_data = preprocessor.preprocess_data()
 
-    # Use the trained model to make a prediction
-    prediction = model.predict(preprocessed_data)
+    # Use the trained model to obtain the probabilities
+    probabilities = model.predict_proba(preprocessed_data)
 
-    # Extract the probability of the positive class
-    probability = prediction[:, 1][0]
+    # Extract the probability of the positive class (SeriousDlqin2yrs)
+    probability = probabilities[:, 1][0]
 
     # Return the predicted output in JSON format
     return {'probability': probability}
-
