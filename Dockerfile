@@ -5,7 +5,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY api /app
 
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
