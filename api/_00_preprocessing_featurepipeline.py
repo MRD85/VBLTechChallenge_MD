@@ -11,14 +11,15 @@ class Preprocessor:
         self._impute_missing_values()
         self._cap_outliers()
         self._one_hot_encoding()
-        self._remove_extra_features()
         self.addMissingColumns()
         self.removeExtraColumns()
         return self.data
 
     def _rename_columns(self):
         self.data = self.data.rename(columns={
+            'ID': 'ID',
             'RevolvingUtilizationOfUnsecuredLines': 'UnsecLines',
+            'age': 'age',
             'NumberOfTime30_59DaysPastDueNotWorse': 'Late3059',
             'DebtRatio': 'DebtRatio',
             'MonthlyIncome': 'MonthlyIncome',
@@ -41,30 +42,22 @@ class Preprocessor:
         self.data.loc[self.data.Deps >= 4, 'Deps'] = 4
 
     def _one_hot_encoding(self):
+        self.data.age = pd.qcut(self.data.age.values, 5, duplicates='drop').codes
+        self.data.UnsecLines = pd.qcut(self.data.UnsecLines.values, 5, duplicates='drop').codes
+        self.data.DebtRatio = pd.qcut(self.data.DebtRatio.values, 5, duplicates='drop').codes
+        self.data.MonthlyIncome = pd.qcut(self.data.MonthlyIncome.values, 5, duplicates='drop').codes
+        self.data.OpenCredit = pd.qcut(self.data.OpenCredit.values, 5, duplicates='drop').codes
+        
         self.data = pd.get_dummies(self.data, columns=["UnsecLines"], prefix="UnsecLines")
+        self.data = pd.get_dummies(self.data, columns=["age"], prefix="age")
+        self.data = pd.get_dummies(self.data, columns=["Late3059"], prefix="Late3059")
+        self.data = pd.get_dummies(self.data, columns=["DebtRatio"], prefix="DebtRatio")
+        self.data = pd.get_dummies(self.data, columns=["MonthlyIncome"], prefix="MonthlyIncome")
         self.data = pd.get_dummies(self.data, columns=["OpenCredit"], prefix="OpenCredit")
         self.data = pd.get_dummies(self.data, columns=["Late90"], prefix="Late90")
         self.data = pd.get_dummies(self.data, columns=["PropLines"], prefix="PropLines")
         self.data = pd.get_dummies(self.data, columns=["Late6089"], prefix="Late6089")
         self.data = pd.get_dummies(self.data, columns=["Deps"], prefix="Deps")
-
-    def _remove_extra_features(self):
-        features_to_remove = set(self.data.columns) - set([
-            'ID',
-            'UnsecLines',
-            'age',
-            'Late3059',
-            'DebtRatio',
-            'MonthlyIncome',
-            'OpenCredit',
-            'Late90',
-            'PropLines',
-            'Late6089',
-            'Deps'
-        ])
-        self.data = self.data.drop(labels=features_to_remove, axis=1)
-
-
 
 
     def addMissingColumns(self):
