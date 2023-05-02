@@ -103,7 +103,7 @@ On Postman, once logged in:
  click on the body section
  Paste:
 
- '''JSON
+ '''json
  [
   {
     "ID": "1",
