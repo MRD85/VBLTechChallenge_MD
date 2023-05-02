@@ -77,7 +77,7 @@ With the _02_model prediction, the first issue I encountered was python not liki
 
 With the app.py file, there was an issue with having "-" in the variable names, so I needed to create aliases using Pydantic "  NumberOfTime30_59DaysPastDueNotWorse: int = Field(alias="NumberOfTime30-59DaysPastDueNotWorse")" to allow the initial submission, and then update the DF to replace "-" with "_" to align to the rest of the model. (I did initially get passed the issue change the JSON input however circled back on myself as thought the closer I align to the initial request, the better! )
 
-Then came the dockerfile, testing, trouble shooting. While I've not coverd everything here, it gives a flavour for the approach and some of the issues I encountered. I also sure there are better approaches out there, but we have a working API. 
+Then came the dockerfile, testing, trouble shooting. While I've not coverd everything here, it gives a flavour for the approach and some of the issues I encountered. I'm also sure there are better approaches out there, but we have a working API. 
 
 
 ## Running it on Docker 
