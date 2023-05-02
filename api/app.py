@@ -7,6 +7,7 @@ from typing import List
 from joblib import load
 from _00_preprocessing_featurepipeline import Preprocessor
 
+
 # Load the trained model
 model = load('random_forest_weights.joblib')
 
