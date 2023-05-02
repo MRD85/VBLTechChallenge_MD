@@ -4,8 +4,8 @@ import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-from _00_preprocessing_featurepipeline import Preprocessor
 from joblib import load
+from _00_preprocessing_featurepipeline import Preprocessor
 
 # Load the trained model
 model = load('random_forest_weights.joblib')
